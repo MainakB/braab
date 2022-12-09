@@ -9,6 +9,8 @@ const WAIT_INTERVAL = 100;
 const pendingValues = new Map<string, any>();
 let waitTimeout: NodeJS.Timer;
 
+let baseUrl: string | undefined;
+
 const errHandler = (err: any) => {
   console.warn(err.code, err.input, err.statusCode, err.statusMessage, err.url, err.body);
 };
@@ -23,7 +25,7 @@ export const getValue = async (
   baseUrl: string
 ): Promise<string | number | boolean | JsonObject | JsonArray | null | undefined> => {
   const res = await got.post(`${baseUrl}/get`, {json: {key}, responseType: 'json'}).catch(errHandler);
-  return res && res.body ? (res.body as JsonObject).value : undefined;
+  return res?.body ? (res.body as JsonObject).value : undefined;
 };
 
 /**
