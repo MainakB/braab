@@ -2,7 +2,7 @@ import type {AddressInfo} from 'node:net';
 import polka from 'polka';
 import {json} from '@polka/parse';
 
-import type {JsonCompatible, JsonPrimitive, JsonObject} from './types';
+// import type {JsonCompatible, JsonPrimitive, JsonObject} from './@types/types';
 
 const store: JsonObject = {};
 /**

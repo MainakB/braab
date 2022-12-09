@@ -1,6 +1,6 @@
-import got, {Response} from 'got';
+import got from 'got';
 
-import type {JsonCompatible, JsonPrimitive, JsonObject, JsonArray} from '@wdio/types';
+// import type {JsonCompatible, JsonPrimitive, JsonObject, JsonArray} from './@types/types';
 
 const WAIT_INTERVAL = 100;
 const pendingValues = new Map<string, any>();

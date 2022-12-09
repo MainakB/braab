@@ -1,15 +1,16 @@
-const {launcher, getValue, setValue} = require('../build/index.js');
+const {launcher, getValue, setValue} = require('../dist/index.js');
 
 const Launcher = new launcher();
 
-Launcher.init().then(val => console.log('Started: ', val));
-
 async function setData() {
-  await setValue('mykey', 'someValue');
+  await setValue('mykey', 'Test Value 123');
 }
 
-setData()
+Launcher.init()
+  .then(() => {
+    return setData();
+  })
   .then(() => {
     return getValue('*');
   })
-  .then(val => console.log('abcd', val));
+  .then(val => console.log('Returned data from store: ', val));
