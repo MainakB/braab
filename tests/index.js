@@ -1,16 +1,19 @@
-const {launcher, getValue, setValue} = require('../dist/index.js');
-
-const Launcher = new launcher();
+const {Launcher, getValue, setValue} = require('../dist/index.js');
 
 async function setData() {
   await setValue('mykey', 'Test Value 123');
 }
 
-Launcher.init()
-  .then(() => {
-    return setData();
+const launcher = new Launcher();
+
+launcher
+  .init()
+  .then(() => setData())
+  .then(() => getValue('*'))
+  .then(val => {
+    console.log('Returned data from store: ', val);
+    // eslint-disable-next-line no-promise-executor-return
+    return new Promise(resolve => resolve());
   })
-  .then(() => {
-    return getValue('*');
-  })
-  .then(val => console.log('Returned data from store: ', val));
+  .then(() => launcher.onComplete())
+  .then(() => console.log('Server stopped'));

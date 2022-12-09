@@ -1,3 +1,5 @@
+/* eslint-disable no-promise-executor-return */
+/* eslint-disable no-undef */
 import {setPort} from './client';
 
 let server: SharedStoreServer;
