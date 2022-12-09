@@ -6,9 +6,22 @@ let server: SharedStoreServer;
 export default class SharedStoreLauncher {
   private _app?: PolkaInstance;
 
+  private static _instance: SharedStoreLauncher;
+
   private baseUrl: string | undefined;
 
   private port: number | undefined;
+
+  constructor() {
+    console.log('Creating new object');
+  }
+
+  static getInstance() {
+    if (!SharedStoreLauncher._instance) {
+      SharedStoreLauncher._instance = new SharedStoreLauncher();
+    }
+    return SharedStoreLauncher._instance;
+  }
 
   async init() {
     /**

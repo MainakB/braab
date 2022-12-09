@@ -4,7 +4,7 @@ async function setData(baseUrl) {
   await setValue('mykey', 'Test Value 123', baseUrl);
 }
 
-const launcher = new Launcher();
+const launcher = Launcher.getInstance();
 
 launcher
   .init()
