@@ -1,4 +1,6 @@
-import type {AddressInfo} from 'node:net';
+/* eslint-disable consistent-return */
+/* eslint-disable no-undef */
+// import type {AddressInfo} from 'node:net';
 import polka from 'polka';
 import {json} from '@polka/parse';
 
@@ -20,7 +22,7 @@ const validateBody: NextFn = (req, res, next) => {
   next();
 };
 
-export const startServer = () =>
+export const startServer = (port: number) =>
   new Promise<{port: number; app: PolkaInstance}>((resolve, reject) => {
     const app = polka()
       /**
@@ -52,11 +54,11 @@ export const startServer = () =>
      * > an arbitrary unused port, which can be retrieved by using `server.address().port`
      * https://nodejs.org/api/net.html#net_server_listen_port_host_backlog_callback
      */
-    app.listen(0, (err: Error) => {
+    app.listen(port, (err: Error) => {
       /* istanbul ignore next */
       if (err) {
         return reject(err);
       }
-      resolve({app, port: (app.server.address() as AddressInfo).port});
+      resolve({app, port});
     });
   });

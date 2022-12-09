@@ -1,15 +1,15 @@
 const {Launcher, getValue, setValue} = require('../dist/index.js');
 
-async function setData() {
-  await setValue('mykey', 'Test Value 123');
+async function setData(baseUrl) {
+  await setValue('mykey', 'Test Value 123', baseUrl);
 }
 
-const launcher = new Launcher();
+const launcher = Launcher.getInstance();
 
 launcher
   .init()
-  .then(() => setData())
-  .then(() => getValue('*'))
+  .then(() => setData(launcher.getBaseUrl()))
+  .then(() => getValue('*', launcher.getBaseUrl()))
   .then(val => {
     console.log('Returned data from store: ', val);
     // eslint-disable-next-line no-promise-executor-return
