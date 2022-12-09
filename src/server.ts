@@ -1,3 +1,5 @@
+/* eslint-disable consistent-return */
+/* eslint-disable no-undef */
 import type {AddressInfo} from 'node:net';
 import polka from 'polka';
 import {json} from '@polka/parse';

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 type JsonPrimitive = string | number | boolean | null;
 type JsonObject = {[x: string]: JsonPrimitive | JsonObject | JsonArray};
 type JsonArray = Array<JsonPrimitive | JsonObject | JsonArray>;

@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-shadow */
+/* eslint-disable consistent-return */
+/* eslint-disable no-undef */
 import got from 'got';
 
 // import type {JsonCompatible, JsonPrimitive, JsonObject, JsonArray} from './@types/types';
@@ -6,9 +9,8 @@ const WAIT_INTERVAL = 100;
 const pendingValues = new Map<string, any>();
 let waitTimeout: NodeJS.Timer;
 
-let baseUrl: string | undefined;
-export const setPort = (port: number) => {
-  baseUrl = `http://localhost:${port}`;
+const errHandler = (err: any) => {
+  console.warn(err.code, err.input, err.statusCode, err.statusMessage, err.url, err.body);
 };
 
 /**
@@ -17,7 +19,8 @@ export const setPort = (port: number) => {
  * @returns {*}
  */
 export const getValue = async (
-  key: string
+  key: string,
+  baseUrl: string
 ): Promise<string | number | boolean | JsonObject | JsonArray | null | undefined> => {
   const res = await got.post(`${baseUrl}/get`, {json: {key}, responseType: 'json'}).catch(errHandler);
   return res?.body ? (res.body as JsonObject).value : undefined;
@@ -28,7 +31,7 @@ export const getValue = async (
  * @param {string}  key
  * @param {*}       value `store[key]` value (plain object)
  */
-export const setValue = async (key: string, value: JsonCompatible | JsonPrimitive) => {
+export const setValue = async (key: string, value: JsonCompatible | JsonPrimitive, baseUrl: string) => {
   /**
    * if someone calls `setValue` in `onPrepare` we don't have a base url
    * set as the launcher is called after user hooks. In this case we need
@@ -63,8 +66,4 @@ export const setValue = async (key: string, value: JsonCompatible | JsonPrimitiv
       err => console.error(`Failed to store all values: ${err.stack}`)
     );
   }, WAIT_INTERVAL);
-};
-
-const errHandler = (err: any) => {
-  console.warn(err.code, err.input, err.statusCode, err.statusMessage, err.url, err.body);
 };
