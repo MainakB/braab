@@ -23,7 +23,7 @@ export const getValue = async (
   baseUrl: string
 ): Promise<string | number | boolean | JsonObject | JsonArray | null | undefined> => {
   const res = await got.post(`${baseUrl}/get`, {json: {key}, responseType: 'json'}).catch(errHandler);
-  return res?.body ? (res.body as JsonObject).value : undefined;
+  return res && res.body ? (res.body as JsonObject).value : undefined;
 };
 
 /**
